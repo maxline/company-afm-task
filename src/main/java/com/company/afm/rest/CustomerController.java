@@ -3,10 +3,7 @@ package com.company.afm.rest;
 import com.company.afm.domain.Customer;
 import com.company.afm.service.CustomerService;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +25,10 @@ public class CustomerController {
     @GetMapping("/get/all")
     public List<Customer> findAll() {
         return service.findAll();
+    }
+
+    @PostMapping("/post")
+    public Customer save(@RequestBody Customer newCustomer) {
+        return service.save(newCustomer);
     }
 }

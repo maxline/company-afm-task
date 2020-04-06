@@ -4,6 +4,7 @@
 // todo loanService add findById
 // todo loan statuses instead of boolean
 // geo ip
+// todo transactional
 
 
 // todo unit tests
@@ -20,6 +21,7 @@
 //    private String country;
 
 // todo equals hashcode for entities
+// validateCustomer move to the CustomerService class
 
 // todo check type id for entities
 @GeneratedValue(strategy = GenerationType.IDENTITY) //todo check type
@@ -34,6 +36,16 @@ http://localhost:8080/loans/get/all shows all loans
 http://localhost:8080/loans/get/approved  shows all approved loans
 http://localhost:8080/loans/get/customer/2 shows all approved loans by customer
 
+
+Create a new Loan record
+```
+$ curl --header "Content-Type: application/json" --request POST --data @loan.json http://localhost:8080/loans/post
+```
+where `load.json` is file with this contend:
+
+```
+{"id":999,"term":90,"amount":9000,"country":"UA","customer":{"id":997,"name":"Vasya","surname":"Pupkin"},"isApproved":true}
+```
 
 Problem definition
 Create a tiny RESTful web service with the following business requirements:

@@ -9,5 +9,7 @@ public interface CustomerService {
 
     Customer findById(long id);
 
-    Customer save(Customer newCustomer);
+    Customer save(Customer customer);
+
+    Customer findOrCreateCustomer(Customer givenCustomer);
 }

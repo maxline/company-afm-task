@@ -1,5 +1,6 @@
 package com.company.afm.service;
 
+import com.company.afm.domain.Customer;
 import com.company.afm.domain.Loan;
 import com.company.afm.repository.LoanRepository;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import java.util.List;
 @Service
 public class LoanServiceImpl implements LoanService {
 
+    private static final boolean STATUS_DECLINED = false;
     private static final boolean STATUS_APPROVED = true;
     private final LoanRepository repository;
 
@@ -35,7 +37,16 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public Loan apply(Loan newLoan) {
-        return repository.save(newLoan);
+    public Loan apply(Loan loan) {
+        if (validateCustomer(loan.getCustomer())) {
+            loan.setIsApproved(STATUS_APPROVED);
+        } else {
+            loan.setIsApproved(STATUS_DECLINED);
+        }
+        return repository.save(loan);
+    }
+
+    private boolean validateCustomer(Customer customer) {
+        return !customer.isBlacklisted();
     }
 }

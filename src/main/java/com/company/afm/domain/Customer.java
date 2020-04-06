@@ -1,9 +1,6 @@
 package com.company.afm.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,9 +19,17 @@ public class Customer {
 
     private String name;
     private String surname;
+    private boolean isBlacklisted;
 
     public Customer(String name, String surname) {
         this.name = name;
         this.surname = surname;
+        this.isBlacklisted = false;
+    }
+
+    public Customer(String name, String surname, boolean isBlacklisted) {
+        this.name = name;
+        this.surname = surname;
+        this.isBlacklisted = isBlacklisted;
     }
 }

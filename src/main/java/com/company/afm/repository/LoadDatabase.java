@@ -13,6 +13,7 @@ public class LoadDatabase {
 
     private static final boolean STATUS_APPROVED = true;
     private static final boolean STATUS_DECLINED = false;
+    private static final boolean IS_BLACKLISTED = true;
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -24,7 +25,7 @@ public class LoadDatabase {
             customerRepository.save(customer1);
             customerRepository.save(customer2);
 
-            customerRepository.save(new Customer("Johny", "Depp"));
+            customerRepository.save(new Customer("Johny", "Depp", IS_BLACKLISTED));
             customerRepository.save(new Customer("Tom", "Hanks"));
             customerRepository.save(new Customer("Tom", "Cruise"));
 

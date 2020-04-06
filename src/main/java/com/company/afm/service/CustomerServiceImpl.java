@@ -30,7 +30,18 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer save(Customer newCustomer) {
-        return repository.save(newCustomer);
+    public Customer save(Customer customer) {
+        return repository.save(customer);
+    }
+
+    @Override
+    public Customer findOrCreateCustomer(Customer givenCustomer) {
+        if (givenCustomer == null) {
+            throw new IllegalArgumentException();
+        }
+
+        return givenCustomer.getId() == null
+                ? repository.save(givenCustomer)
+                : findById(givenCustomer.getId());
     }
 }
