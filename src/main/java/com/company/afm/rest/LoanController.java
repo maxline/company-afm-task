@@ -7,6 +7,7 @@ import com.company.afm.service.LoanService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -38,11 +39,11 @@ public class LoanController {
     }
 
     @PostMapping("/post")
-    public Loan apply(@RequestBody Loan newLoan) {
+    public Loan apply(@RequestBody Loan newLoan, HttpServletRequest request) {
         Customer customerForSave = customerService.findOrCreateCustomer(newLoan.getCustomer());
 
         newLoan.setCustomer(customerForSave);
 
-        return loanService.apply(newLoan);
+        return loanService.apply(newLoan, request.getRemoteAddr());
     }
 }

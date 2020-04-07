@@ -1,53 +1,43 @@
-// todo add apply for loan
-// black list validation
-// loan app0y or apply? or both
-// todo loanService add findById
-// todo loan statuses instead of boolean
-// geo ip
-// todo transactional
+# Simple spring boot RESTful loan application
 
-
-// todo unit tests
-// todo check all nullpointers possible, id from controller etc
-
-// todo add property file
-// update README.md
-
-// Loan
-// todo country
-//    @ManyToOne  //todo check
-//    @JoinColumn(name = "country_id")
-//    private Country country;
-//    private String country;
-
-// todo equals hashcode for entities
-// validateCustomer move to the CustomerService class
-
-// todo check type id for entities
-@GeneratedValue(strategy = GenerationType.IDENTITY) //todo check type
-    private Long id;
-
-// todo hateoas
-
-http://localhost:8080/customers/get/all shows all customers
-http://localhost:8080/customers/get/1 shows customer found by id
-
-http://localhost:8080/loans/get/all shows all loans
-http://localhost:8080/loans/get/approved  shows all approved loans
-http://localhost:8080/loans/get/customer/2 shows all approved loans by customer
-
-
-Create a new Loan record
+## Run the Application
+If you use Maven, run the following command in a terminal window (in the project) directory:
 ```
-$ curl --header "Content-Type: application/json" --request POST --data @loan.json http://localhost:8080/loans/post
+./mvnw spring-boot:run
 ```
-where `load.json` is file with this contend:
+or just run `RunApplication.java` class from your IDE.
 
-```
-{"id":999,"term":90,"amount":9000,"country":"UA","customer":{"id":997,"name":"Vasya","surname":"Pupkin"},"isApproved":true}
-```
+## Links for testing how app is working
+http://localhost:8080/customers/get/all shows all customers<br>
+http://localhost:8080/customers/get/1 shows customer found by id<br>
 
-Problem definition
+http://localhost:8080/loans/get/all shows all loans (loans ids : 1, 2, 3, 4)<br>
+http://localhost:8080/loans/get/approved  shows all approved loans (loans ids : 1, 2, 3)<br>
+http://localhost:8080/loans/get/customer/2 shows all approved loans by customer (loans ids : 1)<br>
+
+## POST requests demo
+### Create a new Customer record
+```
+$ curl --header "Content-Type: application/json" --request POST --data @demo-data/customer.json http://localhost:8080/loans/post
+```
+where `customer.json` is file in `demo-data` package
+
+### Create a new Loan record approved
+```
+$ curl --header "Content-Type: application/json" --request POST --data @demo-data/loan_new_customer.json http://localhost:8080/loans/post
+```
+where `loan_new_customer.json` is file in `demo-data` package
+will also create a new customer record.
+
+### Create a new Loan record declined
+```
+$ curl --header "Content-Type: application/json" --request POST --data @demo-data/loan_blacklisted_customer.json http://localhost:8080/loans/post
+```
+where `loan_blacklisted_customer.json` is file in `demo-data` package
+
+to check the new records was created go to the http://localhost:8080/loans/get/all
+
+## Problem definition
 Create a tiny RESTful web service with the following business requirements:
 
 Application must expose REST API endpoints for the following functionality:
@@ -59,7 +49,8 @@ Service must perform loan application validation according to the following rule
 - application comes from blacklisted personal id;
 - N application / second are received from a single country (essentially we want to limit number of loan applications coming from a country in a given time frame).
 
-Service must perform origin country resolution using a web service (you should choose one) and store country code together with the loan application. Because network is unreliable and services tend to fail, let's agree on default country code - "lv".
+Service must perform origin country resolution using a web service (you should choose one) and store country code together with the loan application.
+Because network is unreliable and services tend to fail, let's agree on default country code - "lv".
 
 Technical requirements:
 You have total control over framework and tools, as long as application is written in Java. Feel free to write tests in any JVM language.

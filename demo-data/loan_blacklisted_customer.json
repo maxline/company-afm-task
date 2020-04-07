@@ -1,0 +1,10 @@
+{
+  "id": 999,
+  "term": 90,
+  "amount": 9000,
+  "country": "UA",
+  "customer": {
+    "id": 3
+  },
+  "isApproved": true
+}

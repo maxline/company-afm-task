@@ -1,0 +1,11 @@
+{
+  "id": 999,
+  "term": 90,
+  "amount": 9000,
+  "country": "UA",
+  "customer": {
+    "name": "Vasya",
+    "surname": "Pupkin"
+  },
+  "isApproved": true
+}

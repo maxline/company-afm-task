@@ -4,21 +4,37 @@ import com.company.afm.domain.Customer;
 import com.company.afm.domain.Loan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
-@Configuration
+@Configuration  //todo load data is not configuration
 public class LoadDatabase {
-
     private static final boolean STATUS_APPROVED = true;
     private static final boolean STATUS_DECLINED = false;
     private static final boolean IS_BLACKLISTED = true;
-
     private final Logger log = LoggerFactory.getLogger(getClass());
+    @Value("${load.demo.data}")
+    private boolean isLoadDemoData;
+
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
+    }
 
     @Bean
     public CommandLineRunner initLoanDB(LoanRepository loanRepository, CustomerRepository customerRepository) {
+        if (isLoadDemoData) {
+            return loadDemoData(loanRepository, customerRepository);
+        } else {
+            return null;
+        }
+    }
+
+    private CommandLineRunner loadDemoData(LoanRepository loanRepository, CustomerRepository customerRepository) {
         return args -> {
             Customer customer1 = new Customer("Andrii", "Shevchenko");
             Customer customer2 = new Customer("Bred", "Pitt");

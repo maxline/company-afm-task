@@ -11,5 +11,5 @@ public interface LoanService {
 
     List<Loan> findByCustomerIdAndIsApproved(Long id);
 
-    Loan apply(Loan loan);
+    Loan apply(Loan loan, String ipAddress);
 }
