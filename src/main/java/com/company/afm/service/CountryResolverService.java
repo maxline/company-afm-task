@@ -24,7 +24,7 @@ public class CountryResolverService {
     public CountryResolverService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
-    //todo cover by unit tests
+
     public Country resolveCountryByIpAddress(String ipAddress) {
         String countryCode;
         String url = countryResolutionEndpoint + ipAddress;
@@ -35,7 +35,7 @@ public class CountryResolverService {
             CountryResponse countryResponse = getCountryResponse(url);
             countryCode = countryResponse.getCountryCode();
         } catch (CountryRestClientException e) {
-            log.error("Can't process the response from the url: " + url);
+            log.error("Can't process the response from the url: " + url + ". The default country will be applied");
             log.error(e.getMessage());
             countryCode = defaultCountryCode;
         }

@@ -1,9 +1,6 @@
 package com.company.afm.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +12,7 @@ import javax.persistence.Id;
 @Setter
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

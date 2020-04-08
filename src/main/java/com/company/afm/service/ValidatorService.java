@@ -12,13 +12,16 @@ import java.util.Queue;
 @Service
 public class ValidatorService {
 
-    @Value("${orders.quantity.limit}")
-    private int ordersQuantityLimit;
-
-    @Value("${orders.quantity.timeframe}")
-    private long ordersQuantityTimeFrame;
+    private final int ordersQuantityLimit;
+    private final long ordersQuantityTimeFrame;
 
     private HashMap<Country, Queue<Long>> recentRequests = new HashMap<>();
+
+    public ValidatorService(@Value("${orders.quantity.limit}") int ordersQuantityLimit,
+                            @Value("${orders.quantity.timeframe}") long ordersQuantityTimeFrame) {
+        this.ordersQuantityLimit = ordersQuantityLimit;
+        this.ordersQuantityTimeFrame = ordersQuantityTimeFrame;
+    }
 
     public boolean validateCustomer(Customer customer) {
         return !customer.isBlacklisted();

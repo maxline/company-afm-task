@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
-@Configuration  //todo load data is not configuration
+@Configuration
 public class LoadDatabase {
     private static final boolean STATUS_APPROVED = true;
     private static final boolean STATUS_DECLINED = false;

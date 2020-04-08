@@ -21,8 +21,6 @@ public class Loan {
     private String country;
 
     @ManyToOne
-//    @JoinColumn(name = "customer_id")
-//    @ManyToOne(cascade = CascadeType.ALL) // todo or PERSIST?
     private Customer customer;
 
     private Boolean isApproved;

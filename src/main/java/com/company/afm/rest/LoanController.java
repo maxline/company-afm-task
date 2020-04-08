@@ -1,8 +1,6 @@
 package com.company.afm.rest;
 
-import com.company.afm.domain.Customer;
 import com.company.afm.domain.Loan;
-import com.company.afm.service.CustomerService;
 import com.company.afm.service.LoanService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +13,9 @@ import java.util.List;
 public class LoanController {
 
     private final LoanService loanService;
-    private final CustomerService customerService;
 
-    public LoanController(@Qualifier("loanServiceImpl") LoanService loanService,
-                          @Qualifier("customerServiceImpl") CustomerService customerService) {
+    public LoanController(@Qualifier("loanServiceImpl") LoanService loanService) {
         this.loanService = loanService;
-        this.customerService = customerService;
     }
 
     @GetMapping("/get/all")
@@ -40,9 +35,6 @@ public class LoanController {
 
     @PostMapping("/post")
     public Loan apply(@RequestBody Loan newLoan, HttpServletRequest request) {
-        Customer customerForSave = customerService.findOrCreateCustomer(newLoan.getCustomer());
-
-        newLoan.setCustomer(customerForSave);
 
         return loanService.apply(newLoan, request.getRemoteAddr());
     }

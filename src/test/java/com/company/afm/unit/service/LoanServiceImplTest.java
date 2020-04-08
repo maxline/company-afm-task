@@ -4,6 +4,7 @@ import com.company.afm.domain.Customer;
 import com.company.afm.domain.Loan;
 import com.company.afm.repository.LoanRepository;
 import com.company.afm.service.CountryResolverService;
+import com.company.afm.service.CustomerService;
 import com.company.afm.service.LoanServiceImpl;
 import com.company.afm.service.ValidatorService;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,6 +33,8 @@ class LoanServiceImplTest {
     @Mock
     private LoanRepository loanRepository;
     @Mock
+    private CustomerService customerService;
+    @Mock
     private CountryResolverService countryResolverService;
     @Mock
     private LoanServiceImpl testInstance;
@@ -40,7 +43,7 @@ class LoanServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        testInstance = new LoanServiceImpl(loanRepository, countryResolverService, validatorService);
+        testInstance = new LoanServiceImpl(loanRepository, customerService, countryResolverService, validatorService);
     }
 
     @Test
@@ -93,12 +96,13 @@ class LoanServiceImplTest {
         // given
         Loan appliedLoan = new Loan(30, 3000, "UA", customer1, null);
 
-        when(loanRepository.save(appliedLoan)).thenReturn(appliedLoan);
+        when(customerService.findOrCreateCustomer(customer1)).thenReturn(customer1);
         when(validatorService.validateCustomer(customer1)).thenReturn(true);
         when(validatorService.validateOrdersQuantity(any())).thenReturn(true);
+        when(loanRepository.save(appliedLoan)).thenReturn(appliedLoan);
 
         // when
-        Loan actualLoans = testInstance.apply(appliedLoan, null); //todo
+        Loan actualLoans = testInstance.apply(appliedLoan, null);
 
         // then
         verify(loanRepository).save(appliedLoan);
@@ -111,12 +115,13 @@ class LoanServiceImplTest {
         // given
         Loan appliedLoan = new Loan(30, 3000, "UA", customer1, null);
 
-        when(loanRepository.save(appliedLoan)).thenReturn(appliedLoan);
+        when(customerService.findOrCreateCustomer(customer1)).thenReturn(customer1);
         when(validatorService.validateCustomer(customer1)).thenReturn(false);
         when(validatorService.validateOrdersQuantity(any())).thenReturn(true);
+        when(loanRepository.save(appliedLoan)).thenReturn(appliedLoan);
 
         // when
-        Loan actualLoans = testInstance.apply(appliedLoan, null); //todo
+        Loan actualLoans = testInstance.apply(appliedLoan, null);
 
         // then
         verify(loanRepository).save(appliedLoan);

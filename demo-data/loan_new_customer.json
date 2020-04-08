@@ -6,6 +6,5 @@
   "customer": {
     "name": "Vasya",
     "surname": "Pupkin"
-  },
-  "isApproved": true
+  }
 }
